@@ -2,24 +2,45 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : Character, ICharacter
+public class Enemy : Character
 {
-    public  void Move()
+    Player player;
+
+    private void Start()
     {
+        player = FindObjectOfType<Player>();
+        animator = GetComponent<Animator>();
     }
 
-    public  void Attack()
+    private void Update()
     {
+        TrgatDistance = Vector3.Distance(transform.position, player.transform.position);
+        Move();
+        Attack();
     }
 
-    public  float Damage()
+
+    private void Move()
     {
-        return 0;
+        if (AttackRange >= TrgatDistance)
+        {
+            animator.SetBool("IsMove", false);
+            transform.position = transform.position;
+            return;
+        }
+
+        animator.SetBool("IsMove", true);
+        transform.position = Vector3.MoveTowards(transform.position, player.transform.position, MoveSpeed * Time.deltaTime);
     }
 
-    public void hit(float Damage)
+    private void Attack()
     {
-        curHp -= Damage;
+        if (Time.time - ListAttackTime >= AttackSpeed && AttackRange >= TrgatDistance)
+        {
+            animator.SetTrigger("IsAttack");
+            ListAttackTime = Time.time;
+            Debug.Log($"{this.name} : АјАн");
+            player.hit(Damage());
+        }
     }
-
 }
