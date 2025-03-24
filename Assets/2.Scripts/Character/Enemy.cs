@@ -1,20 +1,35 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : Character
 {
-    Player player;
+    private static Enemy instance = null;
 
+    public static Enemy Instance
+    {
+        get
+        {
+            if (null == instance)
+            {
+                return null;
+            }
+            return instance;
+        }
+    }
+    protected override void Awake()
+    {
+        base.Awake();
+        if (null == instance) instance = this;
+
+        Gold = Random.Range(Lv*100,Lv*1000)/10 * 10;
+    }
     private void Start()
     {
-        player = FindObjectOfType<Player>();
         animator = GetComponent<Animator>();
     }
 
     private void Update()
     {
-        TrgatDistance = Vector3.Distance(transform.position, player.transform.position);
+        TrgatDistance = Vector3.Distance(transform.position, Player.Instance.transform.position);
         Move();
         Attack();
     }
@@ -30,7 +45,7 @@ public class Enemy : Character
         }
 
         animator.SetBool("IsMove", true);
-        transform.position = Vector3.MoveTowards(transform.position, player.transform.position, MoveSpeed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, Player.Instance.transform.position, MoveSpeed * Time.deltaTime);
     }
 
     private void Attack()
@@ -40,7 +55,12 @@ public class Enemy : Character
             animator.SetTrigger("IsAttack");
             ListAttackTime = Time.time;
             Debug.Log($"{this.name} : АјАн");
-            player.hit(Damage());
+            Player.Instance.hit(Damage());
         }
+    }
+    protected override void Die()
+    {
+        base.Die();
+        Player.Instance.KillEnemy(Lv, Gold);
     }
 }

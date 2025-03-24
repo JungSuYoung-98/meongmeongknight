@@ -33,19 +33,21 @@ public interface ICharacter
 public class Character : MonoBehaviour, ICharacter
 {
     [field: Header("Stat")]
-    [field: SerializeField] public float maxHp { get; private set; } = 100;
+    [field: SerializeField] public float maxHp { get; protected set; } = 100;
     [field: SerializeField] public float curHp;
-    [field: SerializeField] public float Atk { get; private set; } = 5;
+    [field: SerializeField] public float Atk { get; protected set; } = 5;
     public float curAtk;
-    [field: SerializeField] public float Def { get; private set; } = 5;
+    [field: SerializeField] public float Def { get; protected set; } = 5;
     public float curDef;
 
-    [field: SerializeField] public float Lv { get; private set; } = 0;
+    [field: SerializeField] public int Lv { get; protected set; } = 1;
 
-    [field: SerializeField] public float AttackSpeed { get; private set; } = 1f;
-    [field: SerializeField] public float AttackRange { get; private set; } = 2f;
+    [field: SerializeField] public float AttackSpeed { get; protected set; } = 1f;
+    [field: SerializeField] public float AttackRange { get; protected set; } = 2f;
 
     [field: SerializeField] public float MoveSpeed;
+
+    [field: SerializeField] public int Gold;
 
     protected float ListAttackTime = 0;
     protected float TrgatDistance = 0;
@@ -54,7 +56,7 @@ public class Character : MonoBehaviour, ICharacter
 
     protected Animator animator;
 
-    protected void Awake()
+    protected virtual void Awake()
     {
         curHp = maxHp;
     }
@@ -74,7 +76,7 @@ public class Character : MonoBehaviour, ICharacter
         }
     }
 
-    public void Die()
+    protected virtual void Die()
     {
         IsDie = true;
         animator.SetBool("IsDie", true);
@@ -84,5 +86,6 @@ public class Character : MonoBehaviour, ICharacter
     {
         gameObject.SetActive(false);
     }
+
 
 }

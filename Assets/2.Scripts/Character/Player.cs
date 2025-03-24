@@ -5,17 +5,31 @@ using UnityEngine;
 
 public class Player : Character
 {
+    private static Player instance = null;
     Vector3 NextStagePosition = new Vector3(7.3f, 0, -12.3f);
-    Enemy enemy;
     bool AttackCnt = false;
 
-    public float Exp;
-    public float curExp;
-
+    public float Exp = 1; 
+    public float curExp = 0;
+    public static Player Instance
+    {
+        get
+        {
+            if (null == instance)
+            {
+                return null;
+            }
+            return instance;
+        }
+    }
+    protected override void Awake()
+    {
+        base.Awake();
+        if (null == instance) instance = this;
+    }
 
     private void Start()
     {
-        enemy = FindObjectOfType<Enemy>();
         animator = GetComponent<Animator>();
     }
 
@@ -34,7 +48,7 @@ public class Player : Character
     {
         animator.SetBool("IsMove", true);
 
-        if (enemy.gameObject.activeSelf == false)
+        if (Enemy.Instance.gameObject.activeSelf == false)
         {
             transform.position = Vector3.MoveTowards(transform.position, NextStagePosition, MoveSpeed * Time.deltaTime);
             TrgatDistance = Vector3.Distance(transform.position, NextStagePosition);
@@ -42,7 +56,7 @@ public class Player : Character
         }
         else
         {
-            TrgatDistance = Vector3.Distance(transform.position, enemy.transform.position);
+            TrgatDistance = Vector3.Distance(transform.position, Enemy.Instance.transform.position);
 
             if (AttackRange >= TrgatDistance)
             {
@@ -50,13 +64,13 @@ public class Player : Character
                 transform.position = transform.position;
                 return;
             }
-            transform.position = Vector3.MoveTowards(transform.position, enemy.transform.position, MoveSpeed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, Enemy.Instance.transform.position, MoveSpeed * Time.deltaTime);
         }
     }
 
     private void Attack()
     {
-        if (Time.time - ListAttackTime >= AttackSpeed && AttackRange >= TrgatDistance && !enemy.IsDie)
+        if (Time.time - ListAttackTime >= AttackSpeed && AttackRange >= TrgatDistance && !Enemy.Instance.IsDie)
         {
             if (AttackCnt)
             {
@@ -70,9 +84,21 @@ public class Player : Character
             AttackCnt = !AttackCnt;
             ListAttackTime = Time.time;
             Debug.Log($"{this.name} : АјАн");
-            enemy.hit(Damage());
+            Enemy.Instance.hit(Damage());
         }
     }
 
+    public void KillEnemy(int AddExp, int AddGold)
+    {
+        curExp += AddExp;
+        Gold += AddGold;
+        if (Exp <= curExp)
+        {
+            Lv++;
+            curExp = curExp - Exp;
+            Exp = Lv * 10;
+        }
+
+    }
 
 }
