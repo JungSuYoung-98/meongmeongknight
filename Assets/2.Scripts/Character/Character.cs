@@ -82,10 +82,6 @@ public class Character : MonoBehaviour, ICharacter
         animator.SetBool("IsDie", true);
     }
 
-    public void SetActiveEnd()
-    {
-        gameObject.SetActive(false);
-    }
 
 
 }

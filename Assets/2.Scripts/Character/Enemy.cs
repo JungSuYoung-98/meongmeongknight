@@ -15,19 +15,29 @@ public class Enemy : Character
             return instance;
         }
     }
+
     protected override void Awake()
     {
         base.Awake();
         if (null == instance) instance = this;
 
+        transform.position = GetComponentInParent<Transform>().position;
         Gold = Random.Range(Lv*100,Lv*1000)/10 * 10;
     }
+
+    private void OnEnable()
+    {
+        if (null == instance) instance = this; 
+        transform.position = GetComponentInParent<Transform>().position;
+        Gold = Random.Range(Lv * 100, Lv * 1000) / 10 * 10;
+    }
+
     private void Start()
     {
         animator = GetComponent<Animator>();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         TrgatDistance = Vector3.Distance(transform.position, Player.Instance.transform.position);
         Move();
@@ -50,11 +60,12 @@ public class Enemy : Character
 
     private void Attack()
     {
-        if (Time.time - ListAttackTime >= AttackSpeed && AttackRange >= TrgatDistance)
+        if (Player.Instance.IsDie) return;
+
+        if (Time.time - ListAttackTime >= AttackSpeed && AttackRange >= TrgatDistance )
         {
             animator.SetTrigger("IsAttack");
             ListAttackTime = Time.time;
-            Debug.Log($"{this.name} : АјАн");
             Player.Instance.hit(Damage());
         }
     }
@@ -62,5 +73,10 @@ public class Enemy : Character
     {
         base.Die();
         Player.Instance.KillEnemy(Lv, Gold);
+    }
+    public void SetActiveEnd()
+    {
+        instance = null;
+        gameObject.SetActive(false);
     }
 }

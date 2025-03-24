@@ -9,7 +9,7 @@ public class Player : Character
     Vector3 NextStagePosition = new Vector3(7.3f, 0, -12.3f);
     bool AttackCnt = false;
 
-    public float Exp = 1; 
+    public float Exp = 3; 
     public float curExp = 0;
     public static Player Instance
     {
@@ -33,7 +33,7 @@ public class Player : Character
         animator = GetComponent<Animator>();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         Move();
         Attack();
@@ -48,7 +48,7 @@ public class Player : Character
     {
         animator.SetBool("IsMove", true);
 
-        if (Enemy.Instance.gameObject.activeSelf == false)
+        if (Enemy.Instance == null)
         {
             transform.position = Vector3.MoveTowards(transform.position, NextStagePosition, MoveSpeed * Time.deltaTime);
             TrgatDistance = Vector3.Distance(transform.position, NextStagePosition);
@@ -70,6 +70,8 @@ public class Player : Character
 
     private void Attack()
     {
+        if (Enemy.Instance == null || Player.Instance.IsDie) return;
+
         if (Time.time - ListAttackTime >= AttackSpeed && AttackRange >= TrgatDistance && !Enemy.Instance.IsDie)
         {
             if (AttackCnt)
@@ -83,7 +85,6 @@ public class Player : Character
             }
             AttackCnt = !AttackCnt;
             ListAttackTime = Time.time;
-            Debug.Log($"{this.name} : АјАн");
             Enemy.Instance.hit(Damage());
         }
     }
@@ -96,9 +97,14 @@ public class Player : Character
         {
             Lv++;
             curExp = curExp - Exp;
-            Exp = Lv * 10;
+            Exp = Lv * 3;
         }
 
+    }
+
+    protected override void Die()
+    {
+        base.Die();
     }
 
 }
