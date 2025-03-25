@@ -1,7 +1,5 @@
-using System;
-using System.Collections;
+
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class StageManager : MonoBehaviour
@@ -33,7 +31,14 @@ public class StageManager : MonoBehaviour
         if (null == instance) instance = this;
         Init();
         Spawn();
+        
     }
+
+    private void Start()
+    {
+        UIManager.Instance.enemyUI.EnemyUpdate();
+    }
+
     private void Init() // SpawnData[StageNum].Add(SpawntargetKeyValue)
     {
         SpawnData.Add(new List<int>()); // 스테이지 수 만큼 리스트를 만들어줘야함.
@@ -63,9 +68,12 @@ public class StageManager : MonoBehaviour
             }
             ChapterNum++;
             Spawn();
+            UIManager.Instance.NewEnemy();
+            UIManager.Instance.enemyUI.EnemyUpdate();
+            UIManager.Instance.baseUI.BaseUIUpdate();
         }
     }
-    public void Spawn() // 적군 생성
+    public void Spawn() // 적군 활성화
     {
         Spawntarget[SpawnData[StageNum - 1][ChapterNum - 1]].SetActive(true);
     }

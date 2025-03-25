@@ -12,7 +12,12 @@ public class BaseUI : MonoBehaviour
     public TextMeshProUGUI StageInfoText;
     public TextMeshProUGUI GoldText;
 
-    private void Update() //UI 갱신
+    private void Awake()
+    {
+        BaseUIUpdate();
+    }
+
+    public void BaseUIUpdate() //UI 갱신
     {
         HpText.text = $"{Player.Instance.curHp} / {Player.Instance.maxHp}";
         ExpText.text = $"{Player.Instance.curExp} / {Player.Instance.Exp}";

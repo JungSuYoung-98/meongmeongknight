@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Enemy : Character
 {
+
+    public Item[] items;
     private static Enemy instance = null;
 
     public static Enemy Instance
@@ -72,7 +74,8 @@ public class Enemy : Character
     protected override void Die()
     {
         base.Die();
-        Player.Instance.KillEnemy(Lv, Gold);
+        Player.Instance.KillEnemy(Lv, Gold, items[Random.Range(0,items.Length)]);
+        UIManager.Instance.baseUI.BaseUIUpdate();
     }
     public void SetActiveEnd()
     {

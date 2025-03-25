@@ -8,7 +8,7 @@ public class EnemyUI : MonoBehaviour
     public TextMeshProUGUI HpText;
     public Image HpImage;
 
-    public void Update() //UI °»½Å
+    public void EnemyUpdate()
     {
         if (Enemy.Instance == null) return;
         Name.text = Enemy.Instance.name;

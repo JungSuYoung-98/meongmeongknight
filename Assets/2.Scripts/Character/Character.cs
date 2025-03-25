@@ -33,17 +33,15 @@ public interface ICharacter
 public class Character : MonoBehaviour, ICharacter
 {
     [field: Header("Stat")]
-    [field: SerializeField] public float maxHp { get; protected set; } = 100;
+    [field: SerializeField] public float maxHp { get; set; } = 100;
     [field: SerializeField] public float curHp;
-    [field: SerializeField] public float Atk { get; protected set; } = 5;
-    public float curAtk;
-    [field: SerializeField] public float Def { get; protected set; } = 5;
-    public float curDef;
+    [field: SerializeField] public float Atk { get; set; } = 5;
+    [field: SerializeField] public float Def { get; set; } = 5;
 
     [field: SerializeField] public int Lv { get; protected set; } = 1;
 
     [field: SerializeField] public float AttackSpeed { get; protected set; } = 1f;
-    [field: SerializeField] public float AttackRange { get; protected set; } = 2f;
+    protected float AttackRange { get; private set; } = 2f;
 
     [field: SerializeField] public float MoveSpeed;
 
@@ -69,6 +67,8 @@ public class Character : MonoBehaviour, ICharacter
     public virtual void hit(float Damage)
     {
         curHp -= Mathf.Clamp(Damage - Def, 0 ,maxHp);
+        UIManager.Instance.enemyUI.EnemyUpdate();
+        UIManager.Instance.baseUI.BaseUIUpdate();
 
         if (curHp <= 0)
         {

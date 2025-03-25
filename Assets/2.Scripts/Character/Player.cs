@@ -11,6 +11,13 @@ public class Player : Character
 
     public float Exp = 3; 
     public float curExp = 0;
+    
+    public float AddHp;
+    public float AddAtk;
+    public float AddDef;
+
+    Item Item;
+
     public static Player Instance
     {
         get
@@ -31,6 +38,7 @@ public class Player : Character
     private void Start()
     {
         animator = GetComponent<Animator>();
+        Item = GetComponent<Item>();
     }
 
     private void FixedUpdate()
@@ -89,10 +97,20 @@ public class Player : Character
         }
     }
 
-    public void KillEnemy(int AddExp, int AddGold)
+    public void KillEnemy(int AddExp, int AddGold,Item AddItem)
     {
         curExp += AddExp;
         Gold += AddGold;
+
+        for(int i= 0; i< UIManager.Instance.InventoryuI.slot.Length; i++)
+        {
+            if (UIManager.Instance.InventoryuI.slot[i].item == null)
+            {
+                UIManager.Instance.InventoryuI.slot[i].AddItem(AddItem, i);
+                return;
+            }
+        }
+
         if (Exp <= curExp)
         {
             Lv++;
@@ -107,4 +125,10 @@ public class Player : Character
         base.Die();
     }
 
+    public void Equipped()
+    {
+        maxHp = maxHp + Item.Data.Hp;
+        Atk = Atk + Item.Data.Atk;
+        Def = Def + Item.Data.Def;
+    }
 }
