@@ -98,4 +98,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Data: {fileID: 11400000, guid: 1ca6349970f928842882243d1ada4297, type: 2}
   equipped: 0
-  Index: 0

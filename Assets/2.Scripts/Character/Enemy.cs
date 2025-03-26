@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class Enemy : Character
 {
@@ -74,7 +76,8 @@ public class Enemy : Character
     protected override void Die()
     {
         base.Die();
-        Player.Instance.KillEnemy(Lv, Gold, items[Random.Range(0,items.Length)]);
+        Player.Instance.KillEnemy(Lv, Gold, items[0]); //items[Random.Range(0, items.Length)]
+        Player.Instance.KillEnemy(Lv, Gold, items[4]);
         UIManager.Instance.baseUI.BaseUIUpdate();
     }
     public void SetActiveEnd()

@@ -17,6 +17,7 @@ MonoBehaviour:
   GameObjet: {fileID: 5440549554861589292, guid: 565c496e7c5074e4e9a9f04b2f2e43a0,
     type: 3}
   Name: Aurora Blade
+  EquipmentType: 1
   Hp: 0
   Atk: 10
   Def: 0

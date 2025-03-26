@@ -17,10 +17,11 @@ MonoBehaviour:
   GameObjet: {fileID: 2956520923575687383, guid: d8df51d76985bb843937202d5930d483,
     type: 3}
   Name: BluePotion
+  EquipmentType: 0
   Hp: 0
   Atk: 0
   Def: 0
   AddHp: 0
   AddAtk: 0
   AddDef: 10
-  HoldingTime: 30
+  HoldingTime: 3

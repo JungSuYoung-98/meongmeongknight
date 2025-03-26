@@ -17,10 +17,11 @@ MonoBehaviour:
   GameObjet: {fileID: 2336324698936788826, guid: 3d3d2e59eaa9ecf4fa55db46fbd53af5,
     type: 3}
   Name: GreenPotion
+  EquipmentType: 0
   Hp: 0
   Atk: 0
   Def: 0
   AddHp: 0
   AddAtk: 10
   AddDef: 0
-  HoldingTime: 30
+  HoldingTime: 3

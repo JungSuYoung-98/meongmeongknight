@@ -17,6 +17,7 @@ MonoBehaviour:
   GameObjet: {fileID: 5599395930672117450, guid: 9efaf23af13269244ba27e86d2cfbab4,
     type: 3}
   Name: Azure Cutlass
+  EquipmentType: 1
   Hp: 0
   Atk: 15
   Def: 0

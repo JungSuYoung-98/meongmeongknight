@@ -9,12 +9,14 @@ public class Player : Character
     Vector3 NextStagePosition = new Vector3(7.3f, 0, -12.3f);
     bool AttackCnt = false;
 
-    public float Exp = 3; 
+    public float Exp = 3;
     public float curExp = 0;
-    
+
     public float AddHp;
     public float AddAtk;
     public float AddDef;
+
+    public GameObject WeaponPivot;
 
     Item Item;
 
@@ -97,21 +99,23 @@ public class Player : Character
         }
     }
 
-    public void KillEnemy(int AddExp, int AddGold,Item AddItem)
+    public void KillEnemy(int AddExp, int AddGold, Item AddItem)
     {
         curExp += AddExp;
         Gold += AddGold;
 
-        for(int i= 0; i< UIManager.Instance.InventoryuI.slot.Length; i++)
+        for (int i = 0; i < UIManager.Instance.InventoryUI.slot.Count; i++)
         {
-            if (UIManager.Instance.InventoryuI.slot[i].item == null)
+            if (UIManager.Instance.InventoryUI.slot[i].item == null)
             {
-                UIManager.Instance.InventoryuI.slot[i].AddItem(AddItem, i);
-                return;
+                GameObject temp = Instantiate(AddItem.gameObject, Player.Instance.WeaponPivot.transform);
+
+                UIManager.Instance.InventoryUI.slot[i].AddItem(temp);
+                break;
             }
         }
 
-        if (Exp <= curExp)
+        while (Exp <= curExp)
         {
             Lv++;
             curExp = curExp - Exp;
@@ -125,10 +129,4 @@ public class Player : Character
         base.Die();
     }
 
-    public void Equipped()
-    {
-        maxHp = maxHp + Item.Data.Hp;
-        Atk = Atk + Item.Data.Atk;
-        Def = Def + Item.Data.Def;
-    }
 }

@@ -21,7 +21,7 @@ public class UIManager : MonoBehaviour
 
     public EnemyUI enemyUI;
     public BaseUI baseUI;
-    public InventoryUI InventoryuI;
+    public InventoryUI InventoryUI;
 
     private void Awake()
     {

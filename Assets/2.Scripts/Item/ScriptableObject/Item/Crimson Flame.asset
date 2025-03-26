@@ -17,6 +17,7 @@ MonoBehaviour:
   GameObjet: {fileID: 3421616721990322113, guid: 27eaf39c891e5c947bfbefba6f9b65e1,
     type: 3}
   Name: Crimson Flame
+  EquipmentType: 1
   Hp: 0
   Atk: 20
   Def: 0

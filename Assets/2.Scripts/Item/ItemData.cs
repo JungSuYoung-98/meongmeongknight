@@ -6,6 +6,15 @@ public enum ItemType
     Consumable
 }
 
+public enum EquipmentType
+{
+    None,
+    Weapon,
+    Armor,
+    Accessories
+}
+
+
 [CreateAssetMenu(fileName = "ItemSO", menuName = "Scriptable Object/Item Data", order = int.MaxValue)]
 public class ItemData : ScriptableObject
 {
@@ -15,6 +24,7 @@ public class ItemData : ScriptableObject
     public string Name;
 
     [Header("Equipment")]
+    public EquipmentType EquipmentType;
     public float Hp;
     public float Atk;
     public float Def;  

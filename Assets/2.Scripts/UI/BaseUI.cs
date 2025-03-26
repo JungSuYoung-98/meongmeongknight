@@ -12,7 +12,7 @@ public class BaseUI : MonoBehaviour
     public TextMeshProUGUI StageInfoText;
     public TextMeshProUGUI GoldText;
 
-    private void Awake()
+    private void Start()
     {
         BaseUIUpdate();
     }
