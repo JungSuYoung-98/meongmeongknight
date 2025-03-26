@@ -42,7 +42,7 @@ public class StageManager : MonoBehaviour
     private void Init() // SpawnData[StageNum].Add(SpawntargetKeyValue)
     {
         SpawnData.Add(new List<int>()); // 스테이지 수 만큼 리스트를 만들어줘야함.
-        SpawnData[0].Add(0); // 스테이지에 챕터 추가.
+        SpawnData[0].Add(0); // 스테이지에 챕터에 적군 인덱스번호 추가.
         SpawnData[0].Add(4);
         SpawnData[0].Add(5);
         SpawnData.Add(new List<int>());
@@ -74,8 +74,29 @@ public class StageManager : MonoBehaviour
         }
     }
     public void Spawn() // 적군 활성화
-    {
+    {   
         Spawntarget[SpawnData[StageNum - 1][ChapterNum - 1]].SetActive(true);
+    }
+
+    public void SetStage(int stage)
+    {
+        StageNum = stage;
+    }
+
+    public void SetChapter(int Chapter)
+    {
+        ChapterNum = Chapter;
+        if (Enemy.Instance != null) Enemy.Instance.SetActiveEnd();
+
+        Player.Instance.transform.position = PlayerStartPosion;
+        Player.Instance.curHp = Player.Instance.maxHp;
+
+        Spawn();
+        UIManager.Instance.enemyUI.gameObject.SetActive(true);
+        UIManager.Instance.NewEnemy();
+        UIManager.Instance.enemyUI.EnemyUpdate();
+        UIManager.Instance.baseUI.BaseUIUpdate();
+        UIManager.Instance.enemyUI.gameObject.SetActive(false);
     }
 
 }

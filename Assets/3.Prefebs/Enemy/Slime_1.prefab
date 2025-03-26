@@ -565,16 +565,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <maxHp>k__BackingField: 100
   curHp: 0
-  <Atk>k__BackingField: 10
-  curAtk: 0
+  <Atk>k__BackingField: 5
   <Def>k__BackingField: 0
-  curDef: 0
   <Lv>k__BackingField: 1
   <AttackSpeed>k__BackingField: 2
-  <AttackRange>k__BackingField: 3
   MoveSpeed: 2
   Gold: 0
   IsDie: 0
+  items:
+  - {fileID: 5367854793703097717, guid: 565c496e7c5074e4e9a9f04b2f2e43a0, type: 3}
+  - {fileID: 4476639325818212183, guid: 9efaf23af13269244ba27e86d2cfbab4, type: 3}
+  - {fileID: -7253084163953648508, guid: 27eaf39c891e5c947bfbefba6f9b65e1, type: 3}
+  - {fileID: 8784245013157977333, guid: e5a57b46b3ac57f4ea1d1ce66aa90211, type: 3}
+  - {fileID: 3377104796119801428, guid: 3d3d2e59eaa9ecf4fa55db46fbd53af5, type: 3}
+  - {fileID: 7003707698079120037, guid: d8df51d76985bb843937202d5930d483, type: 3}
 --- !u!1 &3845823478740729745
 GameObject:
   m_ObjectHideFlags: 0

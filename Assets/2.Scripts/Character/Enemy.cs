@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 using static UnityEditor.Progress;
 
 public class Enemy : Character
@@ -25,20 +26,17 @@ public class Enemy : Character
         base.Awake();
         if (null == instance) instance = this;
 
-        transform.position = GetComponentInParent<Transform>().position;
         Gold = Random.Range(Lv*100,Lv*1000)/10 * 10;
+        animator = GetComponent<Animator>();
     }
 
     private void OnEnable()
     {
-        if (null == instance) instance = this; 
-        transform.position = GetComponentInParent<Transform>().position;
+        if (null == instance) instance = this;
+        transform.localPosition = Vector3.zero;
+        IsDie = false;
+        curHp = maxHp;
         Gold = Random.Range(Lv * 100, Lv * 1000) / 10 * 10;
-    }
-
-    private void Start()
-    {
-        animator = GetComponent<Animator>();
     }
 
     private void FixedUpdate()
@@ -76,12 +74,12 @@ public class Enemy : Character
     protected override void Die()
     {
         base.Die();
-        Player.Instance.KillEnemy(Lv, Gold, items[0]); //items[Random.Range(0, items.Length)]
-        Player.Instance.KillEnemy(Lv, Gold, items[4]);
+        Player.Instance.KillEnemy(Lv, Gold, items[Random.Range(0, items.Length)]); // ·£´ýµå¶ø
         UIManager.Instance.baseUI.BaseUIUpdate();
     }
     public void SetActiveEnd()
     {
+        animator.SetBool("IsDie", false);
         instance = null;
         gameObject.SetActive(false);
     }
